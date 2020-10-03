@@ -27,11 +27,13 @@ class Menu extends Component {
       );
     };
     return (
-      <FlatList
-        data={this.state.dishes} //data specifies the array to be used. Here dishes is the array
-        renderItem={renderMenuItem} //renderMenuItem is the function passed which tells how to render the array items
-        keyExtractor={(item) => item.id.toString()} //keyExtractor accepts string values
-      />
+      <View>
+        <FlatList
+          data={this.state.dishes} //data specifies the array to be used. Here dishes is the array
+          renderItem={renderMenuItem} //renderMenuItem is the function passed which tells how to render the array items
+          keyExtractor={(item) => item.id.toString()} //keyExtractor accepts string values
+        />
+      </View>
     );
   }
 }
