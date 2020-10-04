@@ -3,6 +3,7 @@ import { FlatList, View, Text, ScrollView } from "react-native";
 import { ListItem, Card } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
 
 const mapStateToProps = (state) => {
   return {
@@ -40,20 +41,44 @@ class About extends Component {
         />
       );
     };
-    return (
-      <ScrollView>
-        <Card featuredTitle="Our History" title="Our History">
-          {History()}
-        </Card>
-        <Card featuredTitle="Corporate Leadership" title="Corporate Leadership">
-          <FlatList
-            data={this.props.leaders.leaders}
-            renderItem={renderLeaders}
-            keyExtractor={(item) => item.id.toString()}
-          />
-        </Card>
-      </ScrollView>
-    );
+
+    if (this.props.leaders.isLoading) {
+      return (
+        <ScrollView>
+          <Card featuredTitle="Our History" title="Our History">
+            {History()}
+            <Loading />
+          </Card>
+        </ScrollView>
+      );
+    } else if (this.props.leaders.errMess) {
+      return (
+        <ScrollView>
+          <Card featuredTitle="Our History" title="Our History">
+            {History()}
+            <Text>{this.props.leaders.errMess}</Text>
+          </Card>
+        </ScrollView>
+      );
+    } else {
+      return (
+        <ScrollView>
+          <Card featuredTitle="Our History" title="Our History">
+            {History()}
+          </Card>
+          <Card
+            featuredTitle="Corporate Leadership"
+            title="Corporate Leadership"
+          >
+            <FlatList
+              data={this.props.leaders.leaders}
+              renderItem={renderLeaders}
+              keyExtractor={(item) => item.id.toString()}
+            />
+          </Card>
+        </ScrollView>
+      );
+    }
   }
 }
 

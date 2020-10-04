@@ -10,11 +10,11 @@ const MenuNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="Menu"
-      screenOptions={({ navigation }) => ({
+      screenOptions={{
         headerTintColor: "#fff",
         headerTitleStyle: { color: "#fff" },
         headerStyle: { backgroundColor: "#512DA8" },
-      })}
+      }}
     >
       <Stack.Screen
         name="Menu"
