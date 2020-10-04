@@ -1,11 +1,11 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from "../components/HomeComponent";
+import Contact from "../components/ContactComponent";
 import { Icon } from "react-native-elements";
 
 const Stack = createStackNavigator();
 
-const HomeNavigator = () => {
+const ContactNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={({ navigation }) => ({
@@ -22,9 +22,13 @@ const HomeNavigator = () => {
         ),
       })}
     >
-      <Stack.Screen name="Home" component={Home} options={{ title: "Home" }} />
+      <Stack.Screen
+        name="Contact"
+        component={Contact}
+        options={{ title: "Contact" }}
+      />
     </Stack.Navigator>
   );
 };
 
-export default HomeNavigator;
+export default ContactNavigator;
