@@ -1,11 +1,17 @@
 import React from "react";
 import Main from "./components/MainComponent";
 import { NavigationContainer } from "@react-navigation/native";
+import { Provider } from "react-redux";
+import { ConfigureStore } from "./redux/configureStore";
+
+const store = ConfigureStore();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Main />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Main />
+      </NavigationContainer>
+    </Provider>
   );
 }

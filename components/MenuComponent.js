@@ -1,41 +1,39 @@
 import React, { Component } from "react";
 import { View, FlatList } from "react-native";
-import { ListItem } from "react-native-elements";
-import { DISHES } from "C:/Users/Aaryan/Projects/ReactNative/confusion/shared/dishes.js";
+import { Tile } from "react-native-elements";
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
+
+const mapStateToProps = (state) => {
+  return {
+    dishes: state.dishes,
+  };
+};
 
 class Menu extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dishes: DISHES,
-    };
-  }
-
   render() {
     const renderMenuItem = ({ item, index }) => {
       return (
-        <ListItem
+        <Tile
           key={index}
           title={item.name}
-          subtitle={item.description}
-          hideChevron={true}
-          onPress={() =>
-            this.props.navigation.navigate("Dishdetail", { dishId: item.id })
-          } //navigation parameter, goes to Dishdetail with the dishId parameter
-          leftAvatar={{ source: require("./images/uthappizza.png") }}
+          caption={item.description}
+          featured
+          onPress={() => navigate("Dishdetail", { dishId: item.id })}
+          imageSrc={{ uri: baseUrl + item.image }}
         />
       );
     };
     return (
       <View>
         <FlatList
-          data={this.state.dishes} //data specifies the array to be used. Here dishes is the array
-          renderItem={renderMenuItem} //renderMenuItem is the function passed which tells how to render the array items
-          keyExtractor={(item) => item.id.toString()} //keyExtractor accepts string values
+          data={this.props.dishes.dishes}
+          renderItem={renderMenuItem}
+          keyExtractor={(item) => item.id.toString()}
         />
       </View>
     );
   }
 }
 
-export default Menu;
+export default connect(mapStateToProps)(Menu);
