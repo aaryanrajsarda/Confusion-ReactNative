@@ -7,6 +7,7 @@ import HomeNavigator from "./HomeNavigator";
 import MenuNavigator from "./MenuNavigator";
 import AboutNavigator from "./AboutNavigator";
 import ContactNavigator from "./ContactNavigator";
+import ReservationNavigator from "./ReservationNavigator";
 import { Icon } from "react-native-elements";
 import {
   Image,
@@ -97,6 +98,22 @@ const MainNavigator = () => {
               name="address-card"
               type="font-awesome"
               size={22}
+              color={tintColor}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Reservation"
+        component={ReservationNavigator}
+        options={{
+          title: "Reserve Table",
+          drawerLabel: "Reserve Table",
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name="cutlery"
+              type="font-awesome"
+              size={24}
               color={tintColor}
             />
           ),
