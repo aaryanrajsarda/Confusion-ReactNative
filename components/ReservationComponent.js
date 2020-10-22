@@ -11,6 +11,7 @@ import {
 import { Card } from "react-native-elements";
 import { Picker } from "@react-native-community/picker";
 import DatePicker from "react-native-datepicker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 class Reservation extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class Reservation extends Component {
     this.setState({
       guests: 1,
       smoking: false,
-      date: "",
+      date: new Date(),
     });
   }
 

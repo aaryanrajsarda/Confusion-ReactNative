@@ -8,6 +8,7 @@ import MenuNavigator from "./MenuNavigator";
 import AboutNavigator from "./AboutNavigator";
 import ContactNavigator from "./ContactNavigator";
 import ReservationNavigator from "./ReservationNavigator";
+import FavoritesNavigator from "./FavoritesNavigator";
 import { Icon } from "react-native-elements";
 import {
   Image,
@@ -112,6 +113,22 @@ const MainNavigator = () => {
           drawerIcon: ({ tintColor }) => (
             <Icon
               name="cutlery"
+              type="font-awesome"
+              size={24}
+              color={tintColor}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={FavoritesNavigator}
+        options={{
+          title: "Favorites",
+          drawerLabel: "Favorites",
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name="heart"
               type="font-awesome"
               size={24}
               color={tintColor}
