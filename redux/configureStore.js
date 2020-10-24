@@ -7,12 +7,12 @@ import { promotions } from "./promotions";
 import { leaders } from "./leaders";
 import { favorites } from "./favorites";
 import { persistStore, persistCombineReducers } from "redux-persist";
-import sessionStorage from "redux-persist/lib/storage";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const ConfigureStore = () => {
   const config = {
     key: "root",
-    storage: sessionStorage,
+    storage: AsyncStorage,
     debug: true,
   };
 

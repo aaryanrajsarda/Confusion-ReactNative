@@ -4,15 +4,13 @@ import {
   Text,
   ScrollView,
   FlatList,
-  SafeAreaView,
   StyleSheet,
-  TextInput,
   Modal,
   Button,
   Alert,
   PanResponder,
 } from "react-native";
-import { Card, Icon, Rating } from "react-native-elements";
+import { Card, Icon, Rating, Input } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { postFavorite } from "../redux/ActionCreators";
@@ -49,6 +47,16 @@ function RenderComments(props) {
 
 function RenderDish(props) {
   const dish = props.dish;
+
+  const recognizeComment = ({ moveX, moveY, dx, dy }) => {
+    if (dx > 200) {
+      //recognize left to right drag
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const recognizeDrag = ({ moveX, moveY, dx, dy }) => {
     if (dx < -200) {
       //recognize right to left drag
@@ -73,7 +81,7 @@ function RenderDish(props) {
     onPanResponderEnd: (e, gestureState) => {
       //when gesture ends
       console.log("pan responder end", gestureState);
-      if (recognizeDrag(gestureState))
+      if (recognizeDrag(gestureState)) {
         Alert.alert(
           "Add Favorite",
           "Are you sure you wish to add " + dish.name + " to favorite?",
@@ -95,7 +103,12 @@ function RenderDish(props) {
           { cancelable: false }
         );
 
-      return true;
+        return true;
+      } else if (recognizeComment(gestureState)) {
+        props.toggleModal();
+      } else {
+        return false;
+      }
     },
   });
 
@@ -230,37 +243,37 @@ class Dishdetail extends Component {
               fractions={0}
               onFinishRating={(rating) => this.setState({ rating: rating })}
             ></Rating>
-            <View style={{ marginTop: 25 }}>
-              <View style={styles.formRow}>
-                <Icon name="user-o" type="font-awesome"></Icon>
-                <TextInput
-                  style={{ marginLeft: 5 }}
-                  placeholder="Author"
-                  onChangeText={(text) => this.setState({ author: text })}
-                ></TextInput>
-              </View>
-              <View style={styles.formRow}>
-                <Icon name="comment-o" type="font-awesome"></Icon>
-                <TextInput
-                  style={{ marginLeft: 5 }}
-                  placeholder="Comment"
-                  onChangeText={(text) => this.setState({ comment: text })}
-                ></TextInput>
-              </View>
+
+            <Input
+              style={{ marginTop: 25 }}
+              placeholder="Author"
+              leftIcon={{ type: "font-awesome", name: "user-o" }}
+              onChangeText={(text) => this.setState({ author: text })}
+              value={this.state.author}
+            />
+            <Input
+              placeholder="Comment"
+              leftIcon={{ type: "font-awesome", name: "comment-o" }}
+              onChangeText={(text) => this.setState({ comment: text })}
+              value={this.state.comment}
+            />
+            <View>
+              <Button
+                onPress={() => this.handleComment(dishId)}
+                color="#512DA8"
+                title="Submit"
+              />
             </View>
-            <Button
-              onPress={() => this.handleComment(dishId)}
-              color="#512DA8"
-              title="Submit"
-            />
-            <Button
-              onPress={() => {
-                this.toggleModal();
-                this.resetForm();
-              }}
-              color="black"
-              title="Cancel"
-            />
+            <View>
+              <Button
+                onPress={() => {
+                  this.toggleModal();
+                  this.resetForm();
+                }}
+                color="black"
+                title="Cancel"
+              />
+            </View>
           </View>
         </Modal>
       </ScrollView>
@@ -276,7 +289,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     justifyContent: "center",
-    margin: 20,
+    marginTop: 20,
   },
   formRow: {
     justifyContent: "flex-start",

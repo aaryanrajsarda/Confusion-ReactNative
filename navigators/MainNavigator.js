@@ -9,6 +9,7 @@ import AboutNavigator from "./AboutNavigator";
 import ContactNavigator from "./ContactNavigator";
 import ReservationNavigator from "./ReservationNavigator";
 import FavoritesNavigator from "./FavoritesNavigator";
+import LoginNavigator from "./LoginNavigator";
 import { Icon } from "react-native-elements";
 import {
   Image,
@@ -129,6 +130,22 @@ const MainNavigator = () => {
           drawerIcon: ({ tintColor }) => (
             <Icon
               name="heart"
+              type="font-awesome"
+              size={24}
+              color={tintColor}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Login"
+        component={LoginNavigator}
+        options={{
+          title: "Login",
+          drawerLabel: "Login",
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name="sign-in"
               type="font-awesome"
               size={24}
               color={tintColor}
