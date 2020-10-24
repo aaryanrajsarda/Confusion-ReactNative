@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../components/LoginComponent";
+import TabsNavigator from "./TabsNavigator";
 import { Icon } from "react-native-elements";
 
 const Stack = createStackNavigator();
@@ -24,7 +25,7 @@ const LoginNavigator = () => {
     >
       <Stack.Screen
         name="Login"
-        component={Login}
+        component={TabsNavigator}
         options={{ title: "Login" }}
       />
     </Stack.Navigator>
