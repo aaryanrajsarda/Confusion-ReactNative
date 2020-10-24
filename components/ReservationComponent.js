@@ -58,7 +58,7 @@ class Reservation extends Component {
     await this.obtainNotificationPermission();
     Notifications.presentNotificationAsync({
       title: "Your Reservation",
-      body: "Reservation for " + date + " requested",
+      body: `Reservation for ${date} requested`,
       sound: true,
     });
   }
