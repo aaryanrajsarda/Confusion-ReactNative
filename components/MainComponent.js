@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Platform } from "react-native";
+import { View, Platform, ToastAndroid } from "react-native";
 import MainNavigator from "../navigators/MainNavigator";
 import { connect } from "react-redux";
 import {
@@ -8,6 +8,7 @@ import {
   fetchPromos,
   fetchLeaders,
 } from "../redux/ActionCreators";
+import NetInfo from "@react-native-community/netinfo";
 
 const mapStateToProps = (state) => {
   return {
@@ -31,7 +32,45 @@ class Main extends Component {
     this.props.fetchComments();
     this.props.fetchPromos();
     this.props.fetchLeaders();
+    NetInfo.fetch().then((connectionInfo) => {
+      ToastAndroid.show(
+        "Initial Network Connectivity Type: " + connectionInfo.type,
+        ToastAndroid.LONG
+      );
+    });
+
+    NetInfo.addEventListener("conectionChange", this.handleConnectivityChange);
   }
+
+  /*componentWillUnmount() {
+    // ? doubt, what does this mean
+    NetInfo.removeEventListener(
+      "connectionChange",
+      this.handleConnectivityChange
+    );
+  }*/
+
+  handleConnectivityChange = (connectionInfo) => {
+    switch (connectionInfo.type) {
+      case "none":
+        ToastAndroid.show("You are now offline!", ToastAndroid.LONG);
+        break;
+      case "wifi":
+        ToastAndroid.show("You are now connected to WiFi!", ToastAndroid.LONG);
+        break;
+      case "cellular":
+        ToastAndroid.show(
+          "You are now connected to Cellular!",
+          ToastAndroid.LONG
+        );
+        break;
+      case "unknown":
+        ToastAndroid.show("You have an unknown connection", ToastAndroid.LONG);
+        break;
+      default:
+        break;
+    }
+  };
 
   render() {
     return (
