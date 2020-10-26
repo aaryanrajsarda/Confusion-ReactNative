@@ -14,7 +14,7 @@ import DatePicker from "react-native-datepicker";
 import * as Animatable from "react-native-animatable";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
-import { NOTIFICATIONS } from "expo-permissions";
+import * as Calendar from "expo-calendar";
 
 class Reservation extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Reservation extends Component {
     this.state = {
       guests: 1,
       smoking: false,
-      date: "",
+      date: new Date(),
       showModal: false,
     };
   }
@@ -35,7 +35,7 @@ class Reservation extends Component {
     this.setState({
       guests: 1,
       smoking: false,
-      date: "",
+      date: new Date(),
     });
   }
 
@@ -58,10 +58,36 @@ class Reservation extends Component {
     await this.obtainNotificationPermission();
     Notifications.presentNotificationAsync({
       title: "Your Reservation",
-      body: `Reservation for ${date} requested`,
+      body: `Reservation for ${date.toISOString()} requested`,
       sound: true,
     });
   }
+
+  obtainCalendarPermission = async () => {
+    const calendarPermission = await Calendar.requestCalendarPermissionsAsync();
+    const granted = calendarPermission.status === "granted";
+    return granted;
+  };
+  addReservationToCalendar = async (date) => {
+    console.log(date);
+    if (this.obtainCalendarPermission) {
+      let calendar = await Calendar.getDefaultCalendarAsync();
+      if (calendar) {
+        let event = Calendar.createEventAsync(calendar.id, {
+          title: "Con Fusion Table Reservation",
+          startDate: date,
+          endDate: new Date(date.setHours(date.getHours() + 2)),
+          location:
+            "121, Clear Water Bay Road, Clear Water Bay, Kowloon, Hong Kong",
+          timeZone: "Asia/Hong_Kong",
+        });
+      } else {
+        console.log("couldn't create event");
+      }
+    } else {
+      console.log("couldn't get calendar permissions");
+    }
+  };
 
   handleReservation() {
     console.log(JSON.stringify(this.state));
@@ -85,6 +111,7 @@ class Reservation extends Component {
           text: "OK",
           onPress: () => {
             this.presentLocalNotification(this.state.date);
+            this.addReservationToCalendar(this.state.date);
             this.resetForm();
           },
         },
@@ -131,7 +158,7 @@ class Reservation extends Component {
               format=""
               mode="datetime"
               placeholder="Select Date and Time"
-              minDate="2020-10-05"
+              minDate={new Date()}
               locale="en"
               confirmBtnTestID="Confirm"
               cancelBtnTest="Cancel"

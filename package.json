@@ -20,6 +20,7 @@
     "chokidar": "3",
     "expo": "~39.0.2",
     "expo-asset": "~8.2.0",
+    "expo-calendar": "~8.5.0",
     "expo-cli": "^3.27.13",
     "expo-image-manipulator": "~8.3.0",
     "expo-image-picker": "~9.1.0",

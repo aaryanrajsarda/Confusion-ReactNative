@@ -22,6 +22,23 @@ class Register extends Component {
     };
   }
 
+  getImageFromGallery = async () => {
+    const galleryPermission = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+    if (galleryPermission.status === "granted") {
+      let chosenImage = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        allowsMultipleSelection: false,
+        aspect: [4, 3],
+      });
+      if (!chosenImage.cancelled) {
+        this.processImage(chosenImage.uri);
+      }
+    }
+  };
+
   getImageFromCamera = async () => {
     const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
     const cameraRollPermission = await Permissions.askAsync(
@@ -78,6 +95,7 @@ class Register extends Component {
               style={styles.image}
             />
             <Button title="Camera" onPress={this.getImageFromCamera} />
+            <Button title="Gallery" onPress={this.getImageFromGallery} />
           </View>
           <Input
             placeholder="Username"
@@ -151,6 +169,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     flexDirection: "row",
+    justifyContent: "space-around",
   },
   image: {
     width: 80,

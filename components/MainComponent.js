@@ -32,14 +32,14 @@ class Main extends Component {
     this.props.fetchComments();
     this.props.fetchPromos();
     this.props.fetchLeaders();
-    NetInfo.fetch().then((connectionInfo) => {
+    /*NetInfo.fetch().then((connectionInfo) => {
       ToastAndroid.show(
         "Initial Network Connectivity Type: " + connectionInfo.type,
         ToastAndroid.LONG
       );
     });
 
-    NetInfo.addEventListener("conectionChange", this.handleConnectivityChange);
+    NetInfo.addEventListener("conectionChange", this.handleConnectivityChange);*/
   }
 
   /*componentWillUnmount() {
@@ -50,7 +50,7 @@ class Main extends Component {
     );
   }*/
 
-  handleConnectivityChange = (connectionInfo) => {
+  /*handleConnectivityChange = (connectionInfo) => {
     switch (connectionInfo.type) {
       case "none":
         ToastAndroid.show("You are now offline!", ToastAndroid.LONG);
@@ -70,7 +70,7 @@ class Main extends Component {
       default:
         break;
     }
-  };
+  };*/
 
   render() {
     return (
