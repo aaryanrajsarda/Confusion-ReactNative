@@ -58,7 +58,7 @@ class Reservation extends Component {
     await this.obtainNotificationPermission();
     Notifications.presentNotificationAsync({
       title: "Your Reservation",
-      body: `Reservation for ${date.toISOString()} requested`,
+      body: `Reservation for ${date.toString()} requested`,
       sound: true,
     });
   }
@@ -68,6 +68,7 @@ class Reservation extends Component {
     const granted = calendarPermission.status === "granted";
     return granted;
   };
+
   addReservationToCalendar = async (date) => {
     console.log(date);
     if (this.obtainCalendarPermission) {
